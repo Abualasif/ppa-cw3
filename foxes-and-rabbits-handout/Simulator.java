@@ -15,16 +15,16 @@ public class Simulator
 {
     // Constants representing configuration information for the simulation.
     // The default width for the grid.
-    private static final int DEFAULT_WIDTH = 240;
+    private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
-    private static final int DEFAULT_DEPTH = 160;
+    private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double VULTURE_CREATION_PROBABILITY = 0.01;
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static final double VULTURE_CREATION_PROBABILITY = 0.02;
+    private static final double FOX_CREATION_PROBABILITY = 0.025;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double GIRAFFE_CREATION_PROBABILITY = 0.03;
-    private static final double BABOON_CREATION_PROBABILITY = 0.04;
-    private static final double RHINO_CREATION_PROBABILITY = 0.5; 
+    private static final double GIRAFFE_CREATION_PROBABILITY = 0.025;
+    private static final double BABOON_CREATION_PROBABILITY = 0.03;
+    private static final double RHINO_CREATION_PROBABILITY = 0.35; 
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -62,10 +62,12 @@ public class Simulator
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rhino.class, Color.BLUE);
+
         view.setColor(Lion.class, Color.RED);
+        view.setColor(Vulture.class, Color.BLUE); 
+        
+        view.setColor(Rhino.class, Color.MAGENTA);
         view.setColor(Giraffe.class, Color.CYAN);
-        view.setColor(Vulture.class, Color.MAGENTA);
         view.setColor(Baboon.class, Color.GREEN);
         
         // Setup a valid starting point.
@@ -156,6 +158,11 @@ public class Simulator
                     Location location = new Location(row, col);
                     Giraffe giraffe = new Giraffe(true, field, location);
                     animals.add(giraffe);
+                }
+                else if(rand.nextDouble() <= BABOON_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Baboon baboon = new Baboon(true, field, location);
+                    animals.add(baboon);
                 }
 
                 else if(rand.nextDouble() <= RHINO_CREATION_PROBABILITY) {
