@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 /**
  * A class representing shared characteristics of animals.
@@ -6,14 +7,24 @@ import java.util.List;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
+
 public abstract class Animal
 {
+
+    // Enum to represent the animals gender
+    enum Gender{
+        Male,
+        Female;
+    }
+
     // Whether the animal is alive or not.
     private boolean alive;
     // The animal's field.
     private Field field;
     // The animal's position in the field.
     private Location location;
+    // The animal's gender
+    protected Gender gender;
     
     /**
      * Create a new animal at location in field.
@@ -28,6 +39,47 @@ public abstract class Animal
         setLocation(location);
     }
     
+    /**
+     * Randomly generate the animals gender with no seed
+     * checks a random float between 0 and 1 to 0.5 to 
+     * make the gender of the animal male or female
+     */
+    protected void setGender(){
+        Random rand = Randomizer.getRandom();
+        if(rand.getFloat() < 0.5){
+            gender = Gender.Male;
+        }
+        else{
+            gender = Gender.Female;
+        }
+    }
+
+    /**
+     * Overloaded Method
+     * Randomly generate the animals gender with a seed
+     * value (maleBirthRate), checks this to a random 
+     * float between 0 and 1 to make the animals gender
+     * male or female
+     * @param maleBirthRate the rate of birth for males in
+     * that animal
+     */
+    protected void setGender(float maleBirthRate){
+        Random rand = Randomizer.getRandom();
+        if(rand.nextFloat() < maleBirthRate){
+            gender = Gender.Male;
+        }
+        else{
+            gender = Gender.Female;
+        }
+    }
+
+    /**
+     * Returns the gender of a given animal
+     */
+    protected Gender getGender(){
+        return gender;
+    }
+
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
