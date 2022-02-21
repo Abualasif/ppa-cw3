@@ -14,6 +14,8 @@ public abstract class Animal
     private Field field;
     // The animal's position in the field.
     private Location location;
+    // all animal instances hold a reference to the same clock.
+    private Clock clock;
     
     /**
      * Create a new animal at location in field.
@@ -21,11 +23,12 @@ public abstract class Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(Field field, Location location)
+    public Animal(Field field, Location location, Clock clock)
     {
         alive = true;
         this.field = field;
         setLocation(location);
+        this.clock = clock;
     }
     
     /**
@@ -87,5 +90,14 @@ public abstract class Animal
     protected Field getField()
     {
         return field;
+    }
+    
+    /**
+     * Return the clock
+     * @return The clock
+     */
+    protected Clock getClock()
+    {
+        return clock;
     }
 }

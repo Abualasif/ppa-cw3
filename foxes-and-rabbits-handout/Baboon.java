@@ -17,7 +17,7 @@ public class Baboon extends Animal
     // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.12;
+    private static final double BREEDING_PROBABILITY = 0.07;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
@@ -36,9 +36,9 @@ public class Baboon extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Baboon(boolean randomAge, Field field, Location location)
+    public Baboon(boolean randomAge, Field field, Location location, Clock clock)
     {
-        super(field, location);
+        super(field, location, clock);
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
@@ -93,7 +93,7 @@ public class Baboon extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Baboon young = new Baboon(false, field, loc);
+            Baboon young = new Baboon(false, field, loc, getClock());
             newRabbits.add(young);
         }
     }

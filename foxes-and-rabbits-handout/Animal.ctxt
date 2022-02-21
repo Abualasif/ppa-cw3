@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Animal
 comment0.text=\r\n\ A\ class\ representing\ shared\ characteristics\ of\ animals.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\r\n\ @version\ 2016.02.29\ (2)\r\n
-comment1.params=field\ location
-comment1.target=Animal(Field,\ Location)
+comment1.params=field\ location\ clock
+comment1.target=Animal(Field,\ Location,\ Clock)
 comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ \r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
 comment2.params=newAnimals
 comment2.target=void\ act(java.util.List)
@@ -22,4 +22,7 @@ comment6.text=\r\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ 
 comment7.params=
 comment7.target=Field\ getField()
 comment7.text=\r\n\ Return\ the\ animal's\ field.\r\n\ @return\ The\ animal's\ field.\r\n
-numComments=8
+comment8.params=
+comment8.target=Clock\ getClock()
+comment8.text=\r\n\ Return\ the\ clock\r\n\ @return\ The\ clock\r\n
+numComments=9

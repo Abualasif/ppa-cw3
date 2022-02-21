@@ -19,12 +19,12 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double VULTURE_CREATION_PROBABILITY = 0.02;
-    private static final double FOX_CREATION_PROBABILITY = 0.025;
+    private static final double VULTURE_CREATION_PROBABILITY = 0.01;
+    private static final double FOX_CREATION_PROBABILITY = 0.01;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double GIRAFFE_CREATION_PROBABILITY = 0.025;
-    private static final double BABOON_CREATION_PROBABILITY = 0.03;
-    private static final double RHINO_CREATION_PROBABILITY = 0.35; 
+    private static final double GIRAFFE_CREATION_PROBABILITY = 0.02;
+    private static final double BABOON_CREATION_PROBABILITY = 0.02;
+    private static final double RHINO_CREATION_PROBABILITY = 0.4; 
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -34,6 +34,8 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
+    // represents the hour of day. All animals hold a reference to this.
+    private Clock clock;
     
     /**
      * Construct a simulation field with default size.
@@ -57,6 +59,9 @@ public class Simulator
             width = DEFAULT_WIDTH;
         }
         
+        //initialise the clock
+        clock = new Clock();
+        
         animals = new ArrayList<>();
         field = new Field(depth, width);
 
@@ -73,6 +78,7 @@ public class Simulator
         // Setup a valid starting point.
         reset();
     }
+
     
     /**
      * Run the simulation from its current state for a reasonably long period,
@@ -92,7 +98,7 @@ public class Simulator
     {
         for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            delay(60);   // uncomment this to run more slowly
+            //delay(60);   // uncomment this to run more slowly
         }
     }
     
@@ -104,7 +110,8 @@ public class Simulator
     public void simulateOneStep()
     {
         step++;
-
+        clock.incrementHourOfDay();
+        
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();        
         // Let all rabbits act.
@@ -146,28 +153,27 @@ public class Simulator
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= VULTURE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Vulture vulture = new Vulture(true, field, location);
+                    Vulture vulture = new Vulture(true, field, location, clock);
                     animals.add(vulture);
                 }
                 else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Lion lion = new Lion(true, field, location);
+                    Lion lion = new Lion(true, field, location, clock);
                     animals.add(lion);
                 }
                 else if (rand.nextDouble() <= GIRAFFE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Giraffe giraffe = new Giraffe(true, field, location);
+                    Giraffe giraffe = new Giraffe(true, field, location, clock);
                     animals.add(giraffe);
                 }
                 else if(rand.nextDouble() <= BABOON_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Baboon baboon = new Baboon(true, field, location);
+                    Baboon baboon = new Baboon(true, field, location, clock);
                     animals.add(baboon);
                 }
-
                 else if(rand.nextDouble() <= RHINO_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Rhino rhino = new Rhino(true, field, location);
+                    Rhino rhino = new Rhino(true, field, location, clock);
                     animals.add(rhino);
                 }
                 // else leave the location empty.

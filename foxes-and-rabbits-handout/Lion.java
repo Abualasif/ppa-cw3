@@ -23,8 +23,8 @@ public class Lion extends Animal
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int GIRAFFE_FOOD_VALUE = 9;
-    private static final int RHINO_FOOD_VALUE = 9;
+    private static final int GIRAFFE_FOOD_VALUE = 10;
+    private static final int RHINO_FOOD_VALUE = 10;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -44,9 +44,9 @@ public class Lion extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Lion(boolean randomAge, Field field, Location location)
+    public Lion(boolean randomAge, Field field, Location location, Clock clock)
     {
-        super(field, location);
+        super(field, location, clock);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(RHINO_FOOD_VALUE);
@@ -69,6 +69,14 @@ public class Lion extends Animal
         incrementAge();
         incrementHunger();
         if(isAlive()) {
+            int hourOfDay = getClock().getHourOfDay();
+            // Lions are asleep for 12 hours
+            if (hourOfDay >= 18 && hourOfDay <= 23) {
+                // maintain hunger level
+                decrementHunger();
+                return;
+            }
+            
             giveBirth(newFoxes);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
@@ -107,6 +115,15 @@ public class Lion extends Animal
         if(foodLevel <= 0) {
             setDead();
         }
+    }
+    
+    /**
+     * Give this lion one food unit.
+     * This is used to maintain hunger when Lion is sleeping
+     */
+    private void decrementHunger()
+    {
+        foodLevel++;
     }
     
     /**
@@ -157,7 +174,7 @@ public class Lion extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Lion young = new Lion(false, field, loc);
+            Lion young = new Lion(false, field, loc, getClock());
             newFoxes.add(young);
         }
     }

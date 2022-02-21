@@ -18,7 +18,7 @@ public class Vulture extends Animal
     // The age to which a fox can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static final double BREEDING_PROBABILITY = 0.09;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
@@ -42,9 +42,9 @@ public class Vulture extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Vulture(boolean randomAge, Field field, Location location)
+    public Vulture(boolean randomAge, Field field, Location location, Clock clock)
     {
-        super(field, location);
+        super(field, location, clock);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(RHINO_FOOD_VALUE);
@@ -67,6 +67,13 @@ public class Vulture extends Animal
         incrementAge();
         incrementHunger();
         if(isAlive()) {
+            int hourOfDay = getClock().getHourOfDay();
+            if (hourOfDay >= 0 && hourOfDay <= 6) {
+                // maintain hunger level
+                decrementHunger();
+                return;
+            }
+
             giveBirth(newFoxes);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
@@ -105,6 +112,15 @@ public class Vulture extends Animal
         if(foodLevel <= 0) {
             setDead();
         }
+    }
+    
+    /**
+     * Give this vulture one food unit.
+     * This is used to maintain hunger when Lion is sleeping
+     */
+    private void decrementHunger()
+    {
+        foodLevel++;
     }
     
     /**
@@ -155,7 +171,7 @@ public class Vulture extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Vulture young = new Vulture(false, field, loc);
+            Vulture young = new Vulture(false, field, loc, getClock());
             newFoxes.add(young);
         }
     }
