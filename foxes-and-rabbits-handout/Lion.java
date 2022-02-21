@@ -60,13 +60,10 @@ public class Lion extends Animal
             age = 0;
             foodLevel = RHINO_FOOD_VALUE;
         }
-        
-        //temp name
-        int genderChoice = rand.nextInt(2);
-        if (genderChoice == 0){
-            
-        }
+<<<<<<< HEAD
         this.setGender();
+=======
+>>>>>>> 904505b9917d94c4c5d7e4c2b90cc2d249b6992f
     }
     
     /**
