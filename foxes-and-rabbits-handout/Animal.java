@@ -45,13 +45,7 @@ public abstract class Animal
      * make the gender of the animal male or female
      */
     protected void setGender(){
-        Random rand = Randomizer.getRandom();
-        if(rand.getFloat() < 0.5){
-            gender = Gender.Male;
-        }
-        else{
-            gender = Gender.Female;
-        }
+        this(0.5);
     }
 
     /**

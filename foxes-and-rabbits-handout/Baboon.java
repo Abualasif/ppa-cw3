@@ -25,7 +25,7 @@ public class Baboon extends Animal
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // A shared male birth rate for animals of this species
-    private static final int maleBirthRate;
+    private static final float maleBirthRate;
 
     // Individual characteristics (instance fields).
     
