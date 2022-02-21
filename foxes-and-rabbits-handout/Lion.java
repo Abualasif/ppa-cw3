@@ -27,7 +27,9 @@ public class Lion extends Animal
     private static final int RHINO_FOOD_VALUE = 10;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+    // A shared male birth rate for animals of this species
+    private static final float maleBirthRate;
+
     // Individual characteristics (instance fields).
     // The fox's age.
     private int age;
@@ -39,6 +41,9 @@ public class Lion extends Animal
     /**
      * Create a fox. A fox can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
+     * 
+     * This animal can be created with a random gender or one
+     * that depends on the male birth rate of that species
      * 
      * @param randomAge If true, the fox will have random age and hunger level.
      * @param field The field currently occupied.
@@ -55,6 +60,7 @@ public class Lion extends Animal
             age = 0;
             foodLevel = RHINO_FOOD_VALUE;
         }
+        this.setGender();
     }
     
     /**
@@ -198,6 +204,34 @@ public class Lion extends Animal
      */
     private boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+       if(gender == Gender.Male){
+            return false;
+        }
+        else{
+            boolean bool = (age > BREEDING_AGE) && isCompatibleAnimal();
+            return bool;
+        }
+    }
+    /**
+     * checks the gender and type of adjacent animals
+     * @return true if adjacent animal is of the same type and is gender male
+     */
+
+    private boolean isCompatibleAnimal()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()){
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Lion){
+                Lion lion = (Lion) animal;
+                if(lion.getGender() == Gender.Male){
+                    return true;
+                }
+                }
+            }
+        return false;
     }
 }

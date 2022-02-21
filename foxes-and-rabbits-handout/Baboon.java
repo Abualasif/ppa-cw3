@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
+
 
 /**
  * A simple model of a rabbit.
@@ -22,7 +24,9 @@ public class Baboon extends Animal
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+    // A shared male birth rate for animals of this species
+    private static final float maleBirthRate;
+
     // Individual characteristics (instance fields).
     
     // The rabbit's age.
@@ -118,6 +122,31 @@ public class Baboon extends Animal
      */
     private boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+       if(gender == Gender.Male){
+            return false;
+        }
+        else{
+            boolean bool = (age > BREEDING_AGE) && isCompatibleAnimal();
+            return bool;
+        }
     }
+
+    private boolean isCompatibleAnimal()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()){
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Baboon){
+                Baboon baboon = (Baboon) animal;
+                if(baboon.getGender() == Gender.Male){
+                    return true;
+                }
+                }
+            }
+        return false;
+    }
+
 }
