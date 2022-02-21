@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 /**
  * A simple model of a rabbit.
@@ -22,6 +23,8 @@ public class Rhino extends Animal
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    // A shared male birth rate for animals of this species
+    private static final float maleBirthRate;
     
     // Individual characteristics (instance fields).
     
@@ -31,6 +34,9 @@ public class Rhino extends Animal
     /**
      * Create a new rabbit. A rabbit may be created with age
      * zero (a new born) or with a random age.
+     * 
+     * This animal can be created with a random gender or one
+     * that depends on the male birth rate of that species
      * 
      * @param randomAge If true, the rabbit will have a random age.
      * @param field The field currently occupied.
@@ -43,6 +49,7 @@ public class Rhino extends Animal
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
         }
+        this.setGender();
     }
     
     /**
@@ -113,11 +120,42 @@ public class Rhino extends Animal
     }
 
     /**
-     * A rabbit can breed if it has reached the breeding age.
+     * A rabbit can breed if it has reached the breeding age,
+     * the adjacent animal is a male and the adjacent animal
+     * is of the same type
      * @return true if the rabbit can breed, false otherwise.
      */
     private boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+        if(gender == Gender.Male){
+            return false;
+        }
+        else{
+        boolean bool = (age > BREEDING_AGE) && isCompatibleAnimal();
+        return bool;
+        }
+    }
+
+    /**
+     * checks the gender and type of adjacent animals
+     * @return true if adjacent animal is of the same type and is gender male
+     */
+
+    private boolean isCompatibleAnimal()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()){
+            Location where = it.next();
+            Object animal = field.getObjectAt(where);
+            if(animal instanceof Rhino){
+                Rhino rhino = (Rhino) animal;
+                if(rhino.getGender() == Gender.Male){
+                    return true;
+                }
+                }
+            }
+        return false;
     }
 }
