@@ -24,7 +24,8 @@ public class Simulator
     // The probability that a rabbit will be created in any given grid position.
     private static final double GIRAFFE_CREATION_PROBABILITY = 0.02;
     private static final double BABOON_CREATION_PROBABILITY = 0.02;
-    private static final double RHINO_CREATION_PROBABILITY = 0.4; 
+    private static final double RHINO_CREATION_PROBABILITY = 0.4;
+    private static final double PLANT_CREATION_PROBABILITY = 0.2;
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -74,6 +75,8 @@ public class Simulator
         view.setColor(Rhino.class, Color.MAGENTA);
         view.setColor(Giraffe.class, Color.CYAN);
         view.setColor(Baboon.class, Color.GREEN);
+
+        view.setColor(Plant.class, Color.BLACK);
         
         // Setup a valid starting point.
         reset();
@@ -175,6 +178,11 @@ public class Simulator
                     Location location = new Location(row, col);
                     Rhino rhino = new Rhino(true, field, location, clock);
                     animals.add(rhino);
+                }
+                else if(rand.nextDouble() <= PLANT_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Plant plant = new Plant(true, field, location, clock);
+                    animals.add(plant);
                 }
                 // else leave the location empty.
             }
