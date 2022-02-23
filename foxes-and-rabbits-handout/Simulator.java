@@ -79,6 +79,7 @@ public class Simulator
         view.setColor(Plant.class, Color.BLACK);
         
         // Setup a valid starting point.
+        System.out.println("Simulation created.");
         reset();
     }
 
@@ -114,6 +115,7 @@ public class Simulator
     {
         step++;
         clock.incrementHourOfDay();
+        Clock.Weather weather = clock.getCurrentWeather();
         
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();        

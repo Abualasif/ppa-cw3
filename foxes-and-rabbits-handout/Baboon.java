@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 
 /**
- * A simple model of a rabbit.
+ * A simple model of 0a rabbit.
  * Rabbits age, move, breed, and die.
  * 
  * @author David J. Barnes and Michael Kölling

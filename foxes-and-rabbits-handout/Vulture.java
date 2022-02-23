@@ -74,10 +74,12 @@ public class Vulture extends Animal
         incrementHunger();
         if(isAlive()) {
             int hourOfDay = getClock().getHourOfDay();
-            if (hourOfDay >= 0 && hourOfDay <= 6) {
+            if (shouldSleep()) {
                 // maintain hunger level
                 decrementHunger();
                 return;
+            } else if (isAffectedByWeather()) {
+                // dont' move
             }
 
             giveBirth(newFoxes);            
@@ -228,8 +230,34 @@ public class Vulture extends Animal
                 if(vulture.getGender() == Gender.Male){
                     return true;
                 }
+                
                 }
             }
             return false;
+    }
+    
+    /**
+     * Check if a vulture is affected by weather conditions
+     * Lions are affected (i.e unable to move/eat) by fog only
+     */
+    public boolean isAffectedByWeather() 
+    {
+        Clock.Weather weather = getClock().getCurrentWeather();
+
+        boolean isAffectedByWeather = (weather == Clock.Weather.FOG);
+        return isAffectedByWeather;
+    }
+    
+    /**
+     * Checks whether a vulture would sleep by checking if the 
+     * hour of day falls withing designated sleeping hours
+     * @return if a lion should sleep
+     */
+    private boolean shouldSleep() 
+    {
+        int hourOfDay = getClock().getHourOfDay();
+        
+        // Lions should sleep between 18:00 and 23:00
+        return hourOfDay >= 18 && hourOfDay <= 23;
     }
 }

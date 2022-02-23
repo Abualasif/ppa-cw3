@@ -77,26 +77,30 @@ public class Lion extends Animal
         if(isAlive()) {
             int hourOfDay = getClock().getHourOfDay();
             // Lions are asleep for 12 hours
-            if (hourOfDay >= 18 && hourOfDay <= 23) {
-                // maintain hunger level
+            if (shouldSleep()) {
+                // don't move and maintain hunger level
                 decrementHunger();
-                return;
-            }
-            
-            giveBirth(newFoxes);            
-            // Move towards a source of food if found.
-            Location newLocation = findFood();
-            if(newLocation == null) { 
-                // No food found - try to move to a free location.
-                newLocation = getField().freeAdjacentLocation(getLocation());
-            }
-            // See if it was possible to move.
-            if(newLocation != null) {
-                setLocation(newLocation);
+
+            } else if (isAffectedByWeather()) {
+                // don't move and maintain hunger level
+                decrementHunger();
             }
             else {
-                // Overcrowding.
-                setDead();
+                giveBirth(newFoxes);            
+                // Move towards a source of food if found.
+                Location newLocation = findFood();
+                if(newLocation == null) { 
+                    // No food found - try to move to a free location.
+                    newLocation = getField().freeAdjacentLocation(getLocation());
+                }
+                // See if it was possible to move.
+                if(newLocation != null) {
+                    setLocation(newLocation);
+                }
+                else {
+                    // Overcrowding.
+                    setDead();
+                }
             }
         }
     }
@@ -212,6 +216,7 @@ public class Lion extends Animal
             return bool;
         }
     }
+    
     /**
      * checks the gender and type of adjacent animals
      * @return true if adjacent animal is of the same type and is gender male
@@ -233,5 +238,30 @@ public class Lion extends Animal
                 }
             }
         return false;
+    }
+    
+    /**
+     * Check if a lion is affected by weather conditions
+     * Lions are affected (i.e unable to move/eat) by fog and rain
+     */
+    public boolean isAffectedByWeather() 
+    {
+        Clock.Weather weather = getClock().getCurrentWeather();
+
+        boolean isAffectedByWeather = (weather == Clock.Weather.FOG || weather == Clock.Weather.RAIN);
+        return isAffectedByWeather;
+    }
+    
+    /**
+     * Checks whether a lion should sleep by checking if the 
+     * hour of day falls withing designated sleeping hours
+     * @return if a lion should sleep
+     */
+    private boolean shouldSleep() 
+    {
+        int hourOfDay = getClock().getHourOfDay();
+        
+        // Lions should sleep between 18:00 and 23:00
+        return hourOfDay >= 18 && hourOfDay <= 23;
     }
 }
