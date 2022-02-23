@@ -61,7 +61,8 @@ public abstract class Animal
      * @param maleBirthRate the rate of birth for males in
      * that animal
      */
-    protected void setGender(float maleBirthRate){
+    protected void setGender(float maleBirthRate)
+    {
         Random rand = Randomizer.getRandom();
         if(rand.nextFloat() < maleBirthRate){
             gender = Gender.Male;

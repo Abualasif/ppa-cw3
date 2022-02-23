@@ -27,7 +27,7 @@ public class Rhino extends Animal
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // A shared male birth rate for animals of this species
-    private static final float maleBirthRate;
+    //private static final float maleBirthRate;
     
     // Individual characteristics (instance fields).
     
@@ -52,11 +52,11 @@ public class Rhino extends Animal
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
-            foodLevel = rand.nextInt(RHINO_FOOD_VALUE);
+            foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
         }
         else {
             age = 0;
-            foodLevel = RHINO_FOOD_VALUE;
+            foodLevel = PLANT_FOOD_VALUE;
         }
         this.setGender();
     }
@@ -67,20 +67,14 @@ public class Rhino extends Animal
      * around. Sometimes it will breed or die of old age.
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void act(List<Animal> newRabbits)
+    public void act(List<Animal> newRhinos)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
             int hourOfDay = getClock().getHourOfDay();
-            // Lions are asleep for 12 hours
-            if (hourOfDay >= 18 && hourOfDay <= 23) {
-                // maintain hunger level
-                decrementHunger();
-                return;
-            }
             
-            giveBirth(newFoxes);            
+            giveBirth(newRhinos);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 
@@ -201,5 +195,16 @@ public class Rhino extends Animal
                 }
             }
         return false;
+    }
+    
+    /**
+     * Make this fox more hungry. This could result in the fox's death.
+     */
+    private void incrementHunger()
+    {
+        foodLevel--;
+        if(foodLevel <= 0) {
+            setDead();
+        }
     }
 }
