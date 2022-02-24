@@ -72,23 +72,28 @@ public class Vulture extends Animal
     {
         incrementAge();
         incrementHunger();
+        Location newLocation = null;
         if(isAlive()) {
-            int hourOfDay = getClock().getHourOfDay();
             if (shouldSleep()) {
                 // maintain hunger level
                 decrementHunger();
                 return;
-            } else if (isAffectedByWeather()) {
-                // dont' move
             }
-
-            giveBirth(newFoxes);            
-            // Move towards a source of food if found.
-            Location newLocation = findFood();
-            if(newLocation == null) { 
-                // No food found - try to move to a free location.
+            else if (isAffectedByWeather()) {
+                // vulture can't hunt prey in fog
+                decrementHunger();
                 newLocation = getField().freeAdjacentLocation(getLocation());
             }
+            else {
+                giveBirth(newFoxes);            
+                // Move towards a source of food if found.
+                newLocation = findFood();
+                if(newLocation == null) { 
+                    // No food found - try to move to a free location.
+                    newLocation = getField().freeAdjacentLocation(getLocation());
+                }
+            }
+            
             // See if it was possible to move.
             if(newLocation != null) {
                 setLocation(newLocation);
@@ -249,9 +254,10 @@ public class Vulture extends Animal
     }
     
     /**
+     * 
      * Checks whether a vulture would sleep by checking if the 
      * hour of day falls withing designated sleeping hours
-     * @return if a lion should sleep
+     * @return if a vulture should sleep
      */
     private boolean shouldSleep() 
     {

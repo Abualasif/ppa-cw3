@@ -74,34 +74,35 @@ public class Lion extends Animal
     {
         incrementAge();
         incrementHunger();
+        Location newLocation = null;
         if(isAlive()) {
-            int hourOfDay = getClock().getHourOfDay();
-            // Lions are asleep for 12 hours
             if (shouldSleep()) {
                 // don't move and maintain hunger level
                 decrementHunger();
-
-            } else if (isAffectedByWeather()) {
-                // don't move and maintain hunger level
+            } 
+            else if (isAffectedByWeather()) {
+                // unable to hunt prey in fog/heavy rain
                 decrementHunger();
-            }
+                newLocation = getField().freeAdjacentLocation(getLocation());
+            } 
             else {
                 giveBirth(newFoxes);            
                 // Move towards a source of food if found.
-                Location newLocation = findFood();
+                newLocation = findFood();
                 if(newLocation == null) { 
                     // No food found - try to move to a free location.
                     newLocation = getField().freeAdjacentLocation(getLocation());
                 }
-                // See if it was possible to move.
-                if(newLocation != null) {
-                    setLocation(newLocation);
-                }
-                else {
-                    // Overcrowding.
-                    setDead();
-                }
             }
+            // See if it was possible to move.
+            if(newLocation != null) {
+                setLocation(newLocation);
+            }
+            else {
+                // Overcrowding.
+                setDead();
+            }
+            
         }
     }
 
@@ -242,7 +243,9 @@ public class Lion extends Animal
     
     /**
      * Check if a lion is affected by weather conditions
-     * Lions are affected (i.e unable to move/eat) by fog and rain
+     * Lions are affected by fog and rain
+     * A lion that is affected can only move to a random adjacent location
+     * and unable to look for prey
      */
     public boolean isAffectedByWeather() 
     {
