@@ -3,43 +3,44 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * A simple model of a fox.
- * Foxes age, move, eat rabbits, and die.
+ * A simple model of a Lion.
+ * Lions age, move, eat prey (Rhinos/Giraffes), and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Lion extends Animal
 {
-    // Characteristics shared by all foxes (class variables).
+    //class variables
     
-    // The age at which a fox can start to breed.
+    // The age at which a Lion can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a fox can live.
+    // The age to which a Lion can live.
     private static final int MAX_AGE = 150;
-    // The likelihood of a fox breeding.
+    // The likelihood of a Lion breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a fox can go before it has to eat again.
+    
+    // The food values of each prey. In effect, these is the
+    // number of steps a lion can go before it has to eat again.
     private static final int GIRAFFE_FOOD_VALUE = 10;
     private static final int RHINO_FOOD_VALUE = 10;
+    
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // A shared male birth rate for animals of this species
-    //private static final float maleBirthRate;
 
     // Individual characteristics (instance fields).
-    // The fox's age.
+    // The Lion's age.
     private int age;
-    // The fox's food level, which is increased by eating rabbits.
+    // The Lion's food level, which is increased by eating prey.
     private int foodLevel;
-    // Enum for gender, maybe put in animal class
+
     
 
     /**
-     * Create a fox. A fox can be created as a new born (age zero
+     * Create a lion. A lion can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
      * This animal can be created with a random gender or one
@@ -49,7 +50,7 @@ public class Lion extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Lion(boolean randomAge, Field field, Location location, Clock clock)
+    public Lion(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         if(randomAge) {
@@ -64,29 +65,30 @@ public class Lion extends Animal
     }
     
     /**
-     * This is what the fox does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
-     * or die of old age.
+     * This is what the lion does most of the time: it hunts for
+     * prey. In the process, it might: breed, die of hunger/old age or 
+     * be unable to hunt due to weather (FOG and RAIN)
      * @param field The field currently occupied.
-     * @param newFoxes A list to return newly born foxes.
+     * @param newLions A list to return newly born foxes.
      */
-    public void act(List<Animal> newFoxes)
+    public void act(List<Animal> newLions)
     {
         incrementAge();
         incrementHunger();
         Location newLocation = null;
+        
         if(isAlive()) {
             if (shouldSleep()) {
                 // don't move and maintain hunger level
                 decrementHunger();
             } 
             else if (isAffectedByWeather()) {
-                // unable to hunt prey in fog/heavy rain
+                // unable to hunt prey, move to random location
                 decrementHunger();
                 newLocation = getField().freeAdjacentLocation(getLocation());
             } 
             else {
-                giveBirth(newFoxes);            
+                giveBirth(newLions);            
                 // Move towards a source of food if found.
                 newLocation = findFood();
                 if(newLocation == null) { 
@@ -107,7 +109,7 @@ public class Lion extends Animal
     }
 
     /**
-     * Increase the age. This could result in the fox's death.
+     * Increase the age. This could result in the lion's death.
      */
     private void incrementAge()
     {
@@ -118,7 +120,7 @@ public class Lion extends Animal
     }
     
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Make this lion more hungry. This could result in the fox's death.
      */
     private void incrementHunger()
     {
@@ -130,7 +132,7 @@ public class Lion extends Animal
     
     /**
      * Give this lion one food unit.
-     * This is used to maintain hunger when Lion is sleeping
+     * This is used to maintain hunger when the lion is sleeping
      */
     private void decrementHunger()
     {
@@ -138,7 +140,7 @@ public class Lion extends Animal
     }
     
     /**
-     * Look for rabbits adjacent to the current location.
+     * Look for prey (Rhinos and Giraffes) adjacent to the current location.
      * Only the first live rabbit is eaten.
      * @return Where food was found, or null if it wasn't.
      */
@@ -172,13 +174,13 @@ public class Lion extends Animal
     }
     
     /**
-     * Check whether or not this fox is to give birth at this step.
+     * Check whether or not this lion is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newFoxes A list to return newly born foxes.
      */
     private void giveBirth(List<Animal> newFoxes)
     {
-        // New foxes are born into adjacent locations.
+        // New lion are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -205,7 +207,7 @@ public class Lion extends Animal
     }
 
     /**
-     * A fox can breed if it has reached the breeding age.
+     * A lion can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {
@@ -222,7 +224,6 @@ public class Lion extends Animal
      * checks the gender and type of adjacent animals
      * @return true if adjacent animal is of the same type and is gender male
      */
-
     private boolean isCompatibleAnimal()
     {
         Field field = getField();
@@ -243,15 +244,15 @@ public class Lion extends Animal
     
     /**
      * Check if a lion is affected by weather conditions
-     * Lions are affected by fog and rain
+     * Lions are affected by FOG and RAIN
      * A lion that is affected can only move to a random adjacent location
      * and unable to look for prey
      */
     public boolean isAffectedByWeather() 
     {
-        Clock.Weather weather = getClock().getCurrentWeather();
+        Environment.Weather weather = getClock().getCurrentWeather();
 
-        boolean isAffectedByWeather = (weather == Clock.Weather.FOG || weather == Clock.Weather.RAIN);
+        boolean isAffectedByWeather = (weather == Environment.Weather.FOG || weather == Environment.Weather.RAIN);
         return isAffectedByWeather;
     }
     

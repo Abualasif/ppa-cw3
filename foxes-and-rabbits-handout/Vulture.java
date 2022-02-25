@@ -3,25 +3,26 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * A simple model of a fox.
- * Foxes age, move, eat rabbits, and die.
+ * A simple model of a vulture.
+ * Vulture age, move, eat prey (Rhinos/Baboons), and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
 public class Vulture extends Animal
 {
-    // Characteristics shared by all foxes (class variables).
+    // class variables
     
-    // The age at which a fox can start to breed.
+    // The age at which a vulture can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a fox can live.
+    // The age to which a vulture can live.
     private static final int MAX_AGE = 150;
-    // The likelihood of a fox breeding.
+    // The likelihood of a vulture breeding.
     private static final double BREEDING_PROBABILITY = 0.09;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
+    
+    // The food values of each prey. In effect, these is the
     // number of steps a fox can go before it has to eat again.
     private static final int GIRAFFE_FOOD_VALUE = 9;
     private static final int RHINO_FOOD_VALUE = 9;
@@ -31,13 +32,13 @@ public class Vulture extends Animal
     //private static final float maleBirthRate;
 
     // Individual characteristics (instance fields).
-    // The fox's age.
+    // The vulture's age.
     private int age;
-    // The fox's food level, which is increased by eating rabbits.
+    // The vulture's food level, which is increased by eating rabbits.
     private int foodLevel;
 
     /**
-     * Create a fox. A fox can be created as a new born (age zero
+     * Create a vulture. A vulture can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
      * This animal can be created with a random gender or one
@@ -47,7 +48,7 @@ public class Vulture extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Vulture(boolean randomAge, Field field, Location location, Clock clock)
+    public Vulture(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         if(randomAge) {
@@ -62,13 +63,13 @@ public class Vulture extends Animal
     }
     
     /**
-     * This is what the fox does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
-     * or die of old age.
+     * This is what the vultures does most of the time: it hunts for
+     * prey. In the process, it might: breed, die of hunger/old age or 
+     * be unable to hunt due to weather (FOG)
      * @param field The field currently occupied.
-     * @param newFoxes A list to return newly born foxes.
+     * @param newVultures A list to return newly born foxes.
      */
-    public void act(List<Animal> newFoxes)
+    public void act(List<Animal> newVultures)
     {
         incrementAge();
         incrementHunger();
@@ -85,7 +86,7 @@ public class Vulture extends Animal
                 newLocation = getField().freeAdjacentLocation(getLocation());
             }
             else {
-                giveBirth(newFoxes);            
+                giveBirth(newVultures);            
                 // Move towards a source of food if found.
                 newLocation = findFood();
                 if(newLocation == null) { 
@@ -106,7 +107,7 @@ public class Vulture extends Animal
     }
 
     /**
-     * Increase the age. This could result in the fox's death.
+     * Increase the age. This could result in the vulture's death.
      */
     private void incrementAge()
     {
@@ -117,7 +118,7 @@ public class Vulture extends Animal
     }
     
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Make this vulture more hungry. This could result in the vulture's death.
      */
     private void incrementHunger()
     {
@@ -137,8 +138,8 @@ public class Vulture extends Animal
     }
     
     /**
-     * Look for rabbits adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Look for prey adjacent to the current location.
+     * Only the first live prey is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -171,11 +172,11 @@ public class Vulture extends Animal
     }
     
     /**
-     * Check whether or not this fox is to give birth at this step.
+     * Check whether or not this vulture is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newFoxes A list to return newly born foxes.
+     * @param newVultures A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newFoxes)
+    private void giveBirth(List<Animal> newVultures)
     {
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -185,7 +186,7 @@ public class Vulture extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Vulture young = new Vulture(false, field, loc, getClock());
-            newFoxes.add(young);
+            newVultures.add(young);
         }
     }
         
@@ -204,7 +205,7 @@ public class Vulture extends Animal
     }
 
     /**
-     * A fox can breed if it has reached the breeding age.
+     * A vulture can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {
@@ -243,18 +244,17 @@ public class Vulture extends Animal
     
     /**
      * Check if a vulture is affected by weather conditions
-     * Lions are affected (i.e unable to move/eat) by fog only
+     * Vultures are affected (i.e unable to move/eat) by FOG ONLY
      */
     public boolean isAffectedByWeather() 
     {
-        Clock.Weather weather = getClock().getCurrentWeather();
+        Environment.Weather weather = getClock().getCurrentWeather();
 
-        boolean isAffectedByWeather = (weather == Clock.Weather.FOG);
+        boolean isAffectedByWeather = (weather == Environment.Weather.FOG);
         return isAffectedByWeather;
     }
     
     /**
-     * 
      * Checks whether a vulture would sleep by checking if the 
      * hour of day falls withing designated sleeping hours
      * @return if a vulture should sleep

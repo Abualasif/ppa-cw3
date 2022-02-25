@@ -6,7 +6,7 @@ import java.util.Iterator;
  * A simple model of a rabbit.
  * Rabbits age, move, breed, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Giraffe extends Animal
@@ -46,7 +46,7 @@ public class Giraffe extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Giraffe(boolean randomAge, Field field, Location location, Clock clock)
+    public Giraffe(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         age = 0;
@@ -63,17 +63,15 @@ public class Giraffe extends Animal
     
         
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the giraffe does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newGiraffes A list to return newly born rabbits.
      */
     public void act(List<Animal> newGiraffes)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            int hourOfDay = getClock().getHourOfDay();
-            // Lions are asleep for 12 hours
             
             giveBirth(newGiraffes);            
             // Move towards a source of food if found.
@@ -93,6 +91,11 @@ public class Giraffe extends Animal
         }
     }
 
+    /**
+     * Look for food (Plants) adjacent to the current location.
+     * Only the first live rabbit is eaten.
+     * @return Where food was found, or null if it wasn't.
+     */
     private Location findFood()
     {
         Field field = getField();
@@ -115,7 +118,7 @@ public class Giraffe extends Animal
 
     /**
      * Increase the age.
-     * This could result in the rabbit's death.
+     * This could result in the giraffe's death.
      */
     private void incrementAge()
     {
@@ -126,11 +129,11 @@ public class Giraffe extends Animal
     }
     
     /**
-     * Check whether or not this rabbit is to give birth at this step.
+     * Check whether or not this giraffe is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newGiraffes A list to return newly born rabbits.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    private void giveBirth(List<Animal> newGiraffes)
     {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -140,7 +143,7 @@ public class Giraffe extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Giraffe young = new Giraffe(false, field, loc, getClock());
-            newRabbits.add(young);
+            newGiraffes.add(young);
         }
     }
         
@@ -158,6 +161,10 @@ public class Giraffe extends Animal
         return births;
     }
 
+    /**
+     * checks the gender and type of adjacent animals
+     * @return true if adjacent animal is of the same type and is gender male
+     */
     private boolean isCompatibleAnimal()
     {
         Field field = getField();
@@ -177,8 +184,8 @@ public class Giraffe extends Animal
     }
 
     /**
-     * A rabbit can breed if it has reached the breeding age.
-     * @return true if the rabbit can breed, false otherwise.
+     * A giraffe can breed if it has reached the breeding age.
+     * @return true if the giraffe can breed, false otherwise.
      */
     private boolean canBreed()
     {
@@ -192,7 +199,7 @@ public class Giraffe extends Animal
     }
     
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Make this giraffe more hungry. This could result in the giraffe's death.
      */
     private void incrementHunger()
     {

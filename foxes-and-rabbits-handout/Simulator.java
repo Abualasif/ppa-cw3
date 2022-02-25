@@ -6,9 +6,9 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing 2 predators, 3 Prey and a plant species.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Simulator
@@ -18,10 +18,10 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
+    
+    // The probability that each species will be created in any given grid position.
     private static final double VULTURE_CREATION_PROBABILITY = 0.01;
     private static final double FOX_CREATION_PROBABILITY = 0.01;
-    // The probability that a rabbit will be created in any given grid position.
     private static final double GIRAFFE_CREATION_PROBABILITY = 0.02;
     private static final double BABOON_CREATION_PROBABILITY = 0.02;
     private static final double RHINO_CREATION_PROBABILITY = 0.4;
@@ -36,7 +36,7 @@ public class Simulator
     // A graphical view of the simulation.
     private SimulatorView view;
     // represents the hour of day. All animals hold a reference to this.
-    private Clock clock;
+    private Environment clock;
     
     /**
      * Construct a simulation field with default size.
@@ -60,8 +60,8 @@ public class Simulator
             width = DEFAULT_WIDTH;
         }
         
-        //initialise the clock
-        clock = new Clock();
+        // initialise the shared clock
+        clock = new Environment();
         
         animals = new ArrayList<>();
         field = new Field(depth, width);
@@ -115,7 +115,6 @@ public class Simulator
     {
         step++;
         clock.incrementHourOfDay();
-        Clock.Weather weather = clock.getCurrentWeather();
         
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();        
@@ -148,7 +147,7 @@ public class Simulator
     }
     
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with all species
      */
     private void populate()
     {
