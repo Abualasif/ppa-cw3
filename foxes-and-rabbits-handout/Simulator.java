@@ -82,14 +82,13 @@ public class Simulator
         reset();
     }
 
-    
     /**
      * Run the simulation from its current state for a reasonably long period,
      * (4000 steps).
      */
-    public void runLongSimulation()
+    public void runLongSimulation(int steps)
     {
-        simulate(4000);
+        simulate(steps);
     }
     
     /**
@@ -99,9 +98,19 @@ public class Simulator
      */
     public void simulate(int numSteps)
     {
-        for(int step = 1; step <= numSteps && view.isViable(field); step++) {
+        int step = 1;
+        while(step <= numSteps && view.isViable(field)) {
+            view.updateInternalField(field);
+            while(view.getIfPaused() && view.isViable(field)){
+                view.updateInternalField(field);
+                if(view.getSingleStep()){
+                    simulateOneStep();
+                    view.negateSingleStep();
+                }
+            }
             simulateOneStep();
-            //delay(60);   // uncomment this to run more slowly
+            delay(120);   // uncomment this to run more slowly
+            step++;
         }
     }
     

@@ -60,7 +60,6 @@ public class Lion extends Animal
             age = 0;
             foodLevel = RHINO_FOOD_VALUE;
         }
-        this.setGender();
     }
     
     /**

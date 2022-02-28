@@ -22,7 +22,7 @@ public class Rhino extends Animal
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
 
-    private static final int PLANT_FOOD_VALUE = 10;
+    private static final int PLANT_FOOD_VALUE = 1;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -58,7 +58,6 @@ public class Rhino extends Animal
             age = 0;
             foodLevel = PLANT_FOOD_VALUE;
         }
-        this.setGender();
     }
     
         

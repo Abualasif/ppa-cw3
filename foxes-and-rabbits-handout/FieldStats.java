@@ -46,7 +46,62 @@ public class FieldStats
         }
         return buffer.toString();
     }
-    
+
+    public String getPopulationStatistics(Field field){
+        StringBuffer buffer = new StringBuffer();
+        if(!countsValid) {
+            generateCounts(field);
+        }
+        for(Class key : counters.keySet()) {
+            Counter info = counters.get(key);
+            buffer.append(" [Class ");
+            buffer.append(info.getName());
+            buffer.append("] : [Count ");
+            buffer.append(info.getCount());
+            buffer.append("] : [Genders ");
+            String genders = getGenders(key,field);
+            buffer.append(genders);
+            buffer.append("] \n");
+        }
+        return buffer.toString();
+    }
+
+    private String getGenders(Class key, Field field){
+
+        Integer males = 0;
+        Integer females = 0;
+
+        for(int row = 0; row < field.getDepth(); row++) {
+            for(int col = 0; col < field.getWidth(); col++) {
+                Object animal = field.getObjectAt(row, col);
+                if (animal != null){
+                    if(animal.getClass().equals(key)) {
+                        Animal currentAnimal = (Animal) animal;
+                        if (currentAnimal.getGenderString().equals("Male")){
+                            males++;
+                        }
+                        else if (currentAnimal.getGenderString().equals("Female")){
+                            females++;
+                        }
+                    }
+                }
+            }
+        }
+
+        StringBuffer strBuffer = new StringBuffer();
+        
+        String malesStr = males.toString();
+        String femalesStr = females.toString();
+
+        strBuffer.append("{Males : ");
+        strBuffer.append(malesStr);
+        strBuffer.append(" } : {Females : ");
+        strBuffer.append(femalesStr);
+        strBuffer.append(" }");
+
+        return strBuffer.toString();
+    }
+
     /**
      * Invalidate the current set of statistics; reset all 
      * counts to zero.
