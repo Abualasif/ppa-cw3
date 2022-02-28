@@ -18,6 +18,8 @@ public class Rhino extends Animal
     private static final double BREEDING_PROBABILITY = 0.4;
     private static final int MAX_LITTER_SIZE = 4;
     private static final int PLANT_FOOD_VALUE = 10;
+
+    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // A shared male birth rate for animals of this species
@@ -51,7 +53,6 @@ public class Rhino extends Animal
             age = 0;
             foodLevel = PLANT_FOOD_VALUE;
         }
-        this.setGender();
     }
     
         

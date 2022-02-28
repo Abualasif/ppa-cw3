@@ -26,11 +26,20 @@ public class SimulatorView extends JFrame
     private final String POPULATION_PREFIX = "Population: ";
     private JLabel stepLabel, population, infoLabel;
     private FieldView fieldView;
-    
+
+    private boolean paused;
+    private boolean singleSimStep;
+
+    private JButton stepButton, pauseButton, continueButton, exitButton, statsButton;
+    private JPanel optionsPanel;
+    private Container contents;
+
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
+
+    private Field internalField;
 
     /**
      * Create a view of the given width and height.
@@ -39,6 +48,10 @@ public class SimulatorView extends JFrame
      */
     public SimulatorView(int height, int width)
     {
+
+        paused = false;
+        singleSimStep = false;
+
         stats = new FieldStats();
         colors = new LinkedHashMap<>();
 
@@ -48,21 +61,99 @@ public class SimulatorView extends JFrame
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
         
         setLocation(100, 50);
+
+        optionsPanel = new JPanel(new BorderLayout());
+
+        stepButton = new JButton("Step Sim");
+        stepButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                stepSim();
+            }
+        });
+        pauseButton = new JButton("Pause Sim");
+        pauseButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                pauseSim();
+            }
+        });
+        continueButton = new JButton("Continue Sim");
+        continueButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                continueSim();
+            }
+        });
+        exitButton = new JButton("Exit Sim");
+        exitButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                exitSim();
+            }
+        });
+        statsButton = new JButton("Show Sim Stats");
+        statsButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                statsSim();
+                continueSim();
+            }
+        });
+
+        optionsPanel.add(stepButton, BorderLayout.NORTH);
+        optionsPanel.add(pauseButton, BorderLayout.CENTER);
+        optionsPanel.add(continueButton, BorderLayout.WEST);
+        optionsPanel.add(exitButton, BorderLayout.EAST);
+        optionsPanel.add(statsButton, BorderLayout.SOUTH);
         
         fieldView = new FieldView(height, width);
 
-        Container contents = getContentPane();
-        
+        contents = getContentPane();
+
         JPanel infoPane = new JPanel(new BorderLayout());
             infoPane.add(stepLabel, BorderLayout.WEST);
             infoPane.add(infoLabel, BorderLayout.CENTER);
         contents.add(infoPane, BorderLayout.NORTH);
+        JPanel viewPane = new JPanel(new BorderLayout());
+            viewPane.add(population, BorderLayout.WEST);
+            viewPane.add(optionsPanel, BorderLayout.CENTER);
         contents.add(fieldView, BorderLayout.CENTER);
-        contents.add(population, BorderLayout.SOUTH);
+        contents.add(viewPane, BorderLayout.SOUTH);
         pack();
         setVisible(true);
     }
     
+    private void stepSim(){
+        singleSimStep = true;
+    }
+
+    public boolean getSingleStep(){
+        return singleSimStep;
+    }
+
+    public void negateSingleStep(){
+        singleSimStep = false;
+    }
+
+    private void statsSim(){
+        pauseSim();
+        JOptionPane.showMessageDialog(contents,stats.getPopulationStatistics(internalField));
+    }
+
+    private void exitSim(){
+        System.exit(0);
+    }
+
+    private void pauseSim(){
+        paused = true;
+    }
+
+    public boolean getIfPaused(){
+        return paused;
+    }
+
+    private void continueSim(){
+        paused = false;
+    }
+
+
+
     /**
      * Define a color to be used for a given class of animal.
      * @param animalClass The animal's Class object.
@@ -137,6 +228,10 @@ public class SimulatorView extends JFrame
     public boolean isViable(Field field)
     {
         return stats.isViable(field);
+    }
+
+    public void updateInternalField(Field field){
+        internalField = field;
     }
     
     /**

@@ -39,6 +39,7 @@ public abstract class Animal
         this.field = field;
         setLocation(location);
         this.clock = clock;
+        this.setGender();
     }
     
     /**
@@ -76,6 +77,17 @@ public abstract class Animal
      */
     protected Gender getGender(){
         return gender;
+    }
+
+    protected String getGenderString(){
+        String str;
+        if (gender.equals(Gender.Male)){
+            str = "Male";
+        }
+        else{
+            str = "Female";
+        }
+        return str;
     }
 
     /**

@@ -52,7 +52,6 @@ public class Giraffe extends Animal
             age = 0;
             foodLevel = PLANT_FOOD_VALUE;
         }
-        this.setGender();
     }
     
         
