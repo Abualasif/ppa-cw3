@@ -4,35 +4,27 @@ import java.util.Iterator;
 
 
 /**
- * A simple model of 0a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a baboon.
+ * Baboons age, move, breed, eat plants and die.
  * 
  * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Baboon extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
+    // class variables
 
-    // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.07;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-
     private static final int PLANT_FOOD_VALUE = 10;
-
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
 
-    // Individual characteristics (instance fields).
-    
-    // The baboon's age.
+    //instance fields
     private int age;
     private int foodLevel;
 
@@ -60,9 +52,9 @@ public class Baboon extends Animal
     }
     
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the baboon does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newBaboons A list to return newly born rabbits.
+     * @param newBaboons A list to return newly born baboons.
      */
     public void act(List<Animal> newBaboons)
     {
@@ -127,11 +119,10 @@ public class Baboon extends Animal
     /**
      * Check whether or not this baboon is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newBaboons A list to return newly born rabbits.
+     * @param newBaboons A list to return newly born baboons.
      */
     private void giveBirth(List<Animal> newBaboons)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());

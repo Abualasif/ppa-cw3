@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * A simple model of a Lion.
- * Lions age, move, eat prey (Rhinos/Giraffes), and die.
+ * Lions age, move, eat prey (Rhinos/Giraffes) and die.
  * 
  * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
@@ -46,7 +46,7 @@ public class Lion extends Animal
      * This animal can be created with a random gender or one
      * that depends on the male birth rate of that species
      * 
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge If true, the lion will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -69,7 +69,7 @@ public class Lion extends Animal
      * prey. In the process, it might: breed, die of hunger/old age or 
      * be unable to hunt due to weather (FOG and RAIN)
      * @param field The field currently occupied.
-     * @param newLions A list to return newly born foxes.
+     * @param newLions A list to return newly born lions.
      */
     public void act(List<Animal> newLions)
     {
@@ -120,7 +120,7 @@ public class Lion extends Animal
     }
     
     /**
-     * Make this lion more hungry. This could result in the fox's death.
+     * Make this lion more hungry. This could result in the lions's death.
      */
     private void incrementHunger()
     {
@@ -141,7 +141,7 @@ public class Lion extends Animal
     
     /**
      * Look for prey (Rhinos and Giraffes) adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Only the first live prey is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -176,9 +176,9 @@ public class Lion extends Animal
     /**
      * Check whether or not this lion is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newFoxes A list to return newly born foxes.
+     * @param newLions A list to return newly born lions.
      */
-    private void giveBirth(List<Animal> newFoxes)
+    private void giveBirth(List<Animal> newLions)
     {
         // New lion are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -188,7 +188,7 @@ public class Lion extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Lion young = new Lion(false, field, loc, getClock());
-            newFoxes.add(young);
+            newLions.add(young);
         }
     }
         

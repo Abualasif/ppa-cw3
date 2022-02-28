@@ -3,46 +3,40 @@ import java.util.Random;
 import java.util.Iterator;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a Giraffe.
+ * Giraffes age, move, breed, eat plants and die.
  * 
  * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Giraffe extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
+    //class variables
 
-    // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.9;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
 
     private static final int PLANT_FOOD_VALUE = 10;
 
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
 
-    // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+    //instance fields
+
     private int age;
     private int foodLevel;
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new Giraffe. A giraffe may be created with age
      * zero (a new born) or with a random age.
      * 
      * This animal can be created with a random gender or one
      * that depends on the male birth rate of that species
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the giraffe will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -65,7 +59,7 @@ public class Giraffe extends Animal
     /**
      * This is what the giraffe does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newGiraffes A list to return newly born rabbits.
+     * @param newGiraffes A list to return newly born giraffes.
      */
     public void act(List<Animal> newGiraffes)
     {
@@ -93,7 +87,7 @@ public class Giraffe extends Animal
 
     /**
      * Look for food (Plants) adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Only the first live plant is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -131,11 +125,10 @@ public class Giraffe extends Animal
     /**
      * Check whether or not this giraffe is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newGiraffes A list to return newly born rabbits.
+     * @param newGiraffes A list to return newly born giraffes.
      */
     private void giveBirth(List<Animal> newGiraffes)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());

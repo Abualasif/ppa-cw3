@@ -11,27 +11,19 @@ import java.util.Iterator;
  */
 public class Rhino extends Animal
 {
-    // Characteristics shared by all rhinos (class variables).
+    //class variables
 
-    // The age at which a rhino can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rhino can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rhino breeding.
     private static final double BREEDING_PROBABILITY = 0.4;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // How many steps a rhino can go before needing to eat
     private static final int PLANT_FOOD_VALUE = 10;
-
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
     
-    // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+    //instance fields
     private int age;
     private int foodLevel;
 
@@ -66,7 +58,7 @@ public class Rhino extends Animal
     /**
      * This is what the rhino does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRhinos A list to return newly born rabbits.
+     * @param newRhinos A list to return newly born rhinos.
      */
     public void act(List<Animal> newRhinos)
     {
@@ -132,11 +124,10 @@ public class Rhino extends Animal
     /**
      * Check whether or not this rhino is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRhinos A list to return newly born rabbits.
+     * @param newRhinos A list to return newly born rhinos.
      */
     private void giveBirth(List<Animal> newRhinos)
     {
-        // New rhinos are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());

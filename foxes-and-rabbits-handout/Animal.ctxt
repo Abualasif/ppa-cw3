@@ -1,14 +1,14 @@
 #BlueJ class context
 comment0.target=Animal
-comment0.text=\r\n\ A\ class\ representing\ shared\ characteristics\ of\ animals.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\r\n\ @version\ 2016.02.29\ (2)\r\n
+comment0.text=\r\n\ A\ class\ representing\ shared\ characteristics\ of\ animals.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ Michael\ K\u00F6lling,\ Haroon\ Yasin,\ Rahi\ Al-Asif\ and\ Mohammed\ Kazi\r\n\ @version\ 2016.02.29\ (2)\r\n
 comment1.params=field\ location\ clock
-comment1.target=Animal(Field,\ Location,\ Clock)
-comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ \r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
+comment1.target=Animal(Field,\ Location,\ Environment)
+comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
 comment10.params=
 comment10.target=Field\ getField()
 comment10.text=\r\n\ Return\ the\ animal's\ field.\r\n\ @return\ The\ animal's\ field.\r\n
 comment11.params=
-comment11.target=Clock\ getClock()
+comment11.target=Environment\ getClock()
 comment11.text=\r\n\ Return\ the\ clock\r\n\ @return\ The\ clock\r\n
 comment2.params=
 comment2.target=void\ setGender()

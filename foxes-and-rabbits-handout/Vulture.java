@@ -23,7 +23,7 @@ public class Vulture extends Animal
     private static final int MAX_LITTER_SIZE = 2;
     
     // The food values of each prey. In effect, these is the
-    // number of steps a fox can go before it has to eat again.
+    // number of steps a vulture can go before it has to eat again.
     private static final int GIRAFFE_FOOD_VALUE = 9;
     private static final int RHINO_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
@@ -31,10 +31,8 @@ public class Vulture extends Animal
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
 
-    // Individual characteristics (instance fields).
-    // The vulture's age.
+    //instance fields
     private int age;
-    // The vulture's food level, which is increased by eating rabbits.
     private int foodLevel;
 
     /**
@@ -44,7 +42,7 @@ public class Vulture extends Animal
      * This animal can be created with a random gender or one
      * that depends on the male birth rate of that species
      * 
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge If true, the vulture will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -67,7 +65,7 @@ public class Vulture extends Animal
      * prey. In the process, it might: breed, die of hunger/old age or 
      * be unable to hunt due to weather (FOG)
      * @param field The field currently occupied.
-     * @param newVultures A list to return newly born foxes.
+     * @param newVultures A list to return newly born vultures.
      */
     public void act(List<Animal> newVultures)
     {
@@ -174,11 +172,11 @@ public class Vulture extends Animal
     /**
      * Check whether or not this vulture is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newVultures A list to return newly born foxes.
+     * @param newVultures A list to return newly born vultures.
      */
     private void giveBirth(List<Animal> newVultures)
     {
-        // New foxes are born into adjacent locations.
+        // New vultures are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
