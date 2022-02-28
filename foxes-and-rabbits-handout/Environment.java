@@ -81,8 +81,6 @@ public class Environment
         if (hourOfDay > 23) {
             hourOfDay = 0;
             setRandomWeather();
-            
-            System.out.println("Current Weather: " + getCurrentWeather());
         }
     }
     
