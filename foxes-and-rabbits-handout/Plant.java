@@ -13,27 +13,21 @@ import java.util.Iterator;
 public class Plant extends Animal
 {
 
-	// The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.4;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+
     private int age;
 
 	/**
-     * Create a new plant. A rabbit may be created with age
+     * Create a new plant. A plant may be created with age
      * zero (a new born) or with a random age.
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the plant will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      * @param clock The shared clock environment for all animals
@@ -51,7 +45,7 @@ public class Plant extends Animal
      * This is what the plant does most of the time - it will 
      * breed.
      * The plant my also die out if it is too old.
-     * @param newPlants A list to return newly born rabbits.
+     * @param newPlants A list to return newly born plants.
      */
     public void act(List<Animal> newPlants)
     {
@@ -84,11 +78,10 @@ public class Plant extends Animal
     /**
      * Check whether or not this plant is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newPlants A list to return newly born rabbits.
+     * @param newPlants A list to return newly born plants.
      */
     private void giveBirth(List<Animal> newPlants)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -121,7 +114,7 @@ public class Plant extends Animal
     }
 
     /**
-     * checks if there is a plant next to it.
+     * checks if there is a plant next to it that it can breed with
      * @return true if any adjacent location contains a plant
      */
 
