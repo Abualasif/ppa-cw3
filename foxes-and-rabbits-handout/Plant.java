@@ -2,37 +2,37 @@ import java.util.List;
 import java.util.Random;
 import java.util.Iterator;
 
+/**
+ * A model of a Plant
+ * Plants age, get eaten and give rise to new plants,
+ * but they do not move in the field.
+ * 
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
+ * @version 2016.02.29 (2)
+ */
 public class Plant extends Animal
 {
 
-	// The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.4;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+
     private int age;
 
 	/**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new plant. A plant may be created with age
      * zero (a new born) or with a random age.
      * 
-     * This animal can be created with a random gender or one
-     * that depends on the male birth rate of that species
-     * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the plant will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param clock The shared clock environment for all animals
      */
-    public Plant(boolean randomAge, Field field, Location location, Clock clock)
+    public Plant(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         age = 0;
@@ -42,18 +42,19 @@ public class Plant extends Animal
     }
 
 	/**
-     * This is what the rabbit does most of the time - it runs 
-     * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * This is what the plant does most of the time - it will 
+     * breed.
+     * The plant my also die out if it is too old.
+     * @param newPlants A list to return newly born plants.
      */
-    public void act(List<Animal> newRabbits)
+    public void act(List<Animal> newPlants)
     {
         incrementAge();
         if(isAlive()) {
-            giveBirth(newRabbits);            
-            // Try to move into a free location.
+            giveBirth(newPlants);            
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
+            
             }
             else {
                 // Overcrowding.
@@ -64,7 +65,7 @@ public class Plant extends Animal
 
     /**
      * Increase the age.
-     * This could result in the rabbit's death.
+     * This could result in plant dying out.
      */
     private void incrementAge()
     {
@@ -75,13 +76,12 @@ public class Plant extends Animal
     }
 
     /**
-     * Check whether or not this rabbit is to give birth at this step.
+     * Check whether or not this plant is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newPlants A list to return newly born plants.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    private void giveBirth(List<Animal> newPlants)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -89,14 +89,14 @@ public class Plant extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Plant young = new Plant(false, field, loc, getClock());
-            newRabbits.add(young);
+            newPlants.add(young);
         }
     }
         
     /**
-     * Generate a number representing the number of births,
+     * Generate a number representing the number of new plants,
      * if it can breed.
-     * @return The number of births (may be zero).
+     * @return The number of new plants (may be zero).
      */
     private int breed()
     {
@@ -114,8 +114,8 @@ public class Plant extends Animal
     }
 
     /**
-     * checks the gender and type of adjacent animals
-     * @return true if adjacent animal is of the same type and is gender male
+     * checks if there is a plant next to it that it can breed with
+     * @return true if any adjacent location contains a plant
      */
 
     private boolean isCompatibleAnimal()

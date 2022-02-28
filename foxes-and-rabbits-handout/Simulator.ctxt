@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Simulator
-comment0.text=\r\n\ A\ simple\ predator-prey\ simulator,\ based\ on\ a\ rectangular\ field\r\n\ containing\ rabbits\ and\ foxes.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\r\n\ @version\ 2016.02.29\ (2)\r\n
+comment0.text=\r\n\ A\ simple\ predator-prey\ simulator,\ based\ on\ a\ rectangular\ field\r\n\ containing\ 2\ predators,\ 3\ Prey\ and\ a\ plant\ species.\r\n\ \r\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling,\ Haroon\ Yasin,\ Rahi\ Al-Asif\ and\ Mohammed\ Kazi\r\n\ @version\ 2016.02.29\ (2)\r\n
 comment1.params=
 comment1.target=Simulator()
 comment1.text=\r\n\ Construct\ a\ simulation\ field\ with\ default\ size.\r\n
@@ -21,7 +21,7 @@ comment6.target=void\ reset()
 comment6.text=\r\n\ Reset\ the\ simulation\ to\ a\ starting\ position.\r\n
 comment7.params=
 comment7.target=void\ populate()
-comment7.text=\r\n\ Randomly\ populate\ the\ field\ with\ foxes\ and\ rabbits.\r\n
+comment7.text=\r\n\ Randomly\ populate\ the\ field\ with\ all\ species\r\n
 comment8.params=millisec
 comment8.target=void\ delay(int)
 comment8.text=\r\n\ Pause\ for\ a\ given\ time.\r\n\ @param\ millisec\ \ The\ time\ to\ pause\ for,\ in\ milliseconds\r\n

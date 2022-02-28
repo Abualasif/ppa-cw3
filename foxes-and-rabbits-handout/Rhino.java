@@ -3,50 +3,47 @@ import java.util.Random;
 import java.util.Iterator;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a rhino.
+ * Rhinos age, move, breed, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Rhino extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
+    //class variables
 
-    // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.4;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-
-    private static final int PLANT_FOOD_VALUE = 1;
+=======
+    private static final int PLANT_FOOD_VALUE = 10;
+>>>>>>> da663a66adbd60b138b7e82743856f03f3d06fb3
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
     
-    // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+    //instance fields
     private int age;
     private int foodLevel;
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new rhino. A rhino may be created with age
      * zero (a new born) or with a random age.
      * 
      * This animal can be created with a random gender or one
      * that depends on the male birth rate of that species
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the rhino will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param clock The shared clock environment for all animals
      */
-    public Rhino(boolean randomAge, Field field, Location location, Clock clock)
+    public Rhino(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         age = 0;
@@ -62,16 +59,15 @@ public class Rhino extends Animal
     
         
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the rhino does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newRhinos A list to return newly born rhinos.
      */
     public void act(List<Animal> newRhinos)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            int hourOfDay = getClock().getHourOfDay();
             
             giveBirth(newRhinos);            
             // Move towards a source of food if found.
@@ -91,6 +87,11 @@ public class Rhino extends Animal
         }
     }
 
+    /**
+     * Look for plants adjacent to the current location.
+     * Only the first plant found is eaten.
+     * @return Where a plant was found, or null if it wasn't.
+     */
     private Location findFood()
     {
         Field field = getField();
@@ -113,7 +114,7 @@ public class Rhino extends Animal
 
     /**
      * Increase the age.
-     * This could result in the rabbit's death.
+     * This could result in the rhino's death.
      */
     private void incrementAge()
     {
@@ -124,13 +125,12 @@ public class Rhino extends Animal
     }
     
     /**
-     * Check whether or not this rabbit is to give birth at this step.
+     * Check whether or not this rhino is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newRhinos A list to return newly born rhinos.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    private void giveBirth(List<Animal> newRhinos)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -138,7 +138,7 @@ public class Rhino extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Rhino young = new Rhino(false, field, loc, getClock());
-            newRabbits.add(young);
+            newRhinos.add(young);
         }
     }
         
@@ -157,10 +157,10 @@ public class Rhino extends Animal
     }
 
     /**
-     * A rabbit can breed if it has reached the breeding age,
+     * A rhino can breed if it has reached the breeding age,
      * the adjacent animal is a male and the adjacent animal
      * is of the same type
-     * @return true if the rabbit can breed, false otherwise.
+     * @return true if the rhino can breed, false otherwise.
      */
     private boolean canBreed()
     {
@@ -197,7 +197,7 @@ public class Rhino extends Animal
     }
     
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Make this rhino more hungry. This could result in the rhino's death.
      */
     private void incrementHunger()
     {

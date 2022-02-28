@@ -1,18 +1,41 @@
 #BlueJ class context
 comment0.target=Animal
-comment0.text=\r\n\ A\ class\ representing\ shared\ characteristics\ of\ animals.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\r\n\ @version\ 2016.02.29\ (2)\r\n
+comment0.text=\r\n\ A\ class\ representing\ shared\ characteristics\ of\ animals.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ Michael\ K\u00F6lling,\ Haroon\ Yasin,\ Rahi\ Al-Asif\ and\ Mohammed\ Kazi\r\n\ @version\ 2016.02.29\ (2)\r\n
 comment1.params=field\ location\ clock
+<<<<<<< HEAD
 comment1.target=Animal(Field,\ Location,\ Clock)
 comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ \r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
 comment10.params=newLocation
 comment10.target=void\ setLocation(Location)
 comment10.text=\r\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ field.\r\n\ @param\ newLocation\ The\ animal's\ new\ location.\r\n
 comment11.params=
+=======
+<<<<<<< HEAD
+comment1.target=Animal(Field,\ Location,\ Environment)
+comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
+comment10.params=
+comment10.target=Field\ getField()
+comment10.text=\r\n\ Return\ the\ animal's\ field.\r\n\ @return\ The\ animal's\ field.\r\n
+comment11.params=
+comment11.target=Environment\ getClock()
+comment11.text=\r\n\ Return\ the\ clock\r\n\ @return\ The\ clock\r\n
+=======
+comment1.target=Animal(Field,\ Location,\ Clock)
+comment1.text=\r\n\ Create\ a\ new\ animal\ at\ location\ in\ field.\r\n\ \r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
+comment10.params=newLocation
+comment10.target=void\ setLocation(Location)
+comment10.text=\r\n\ Place\ the\ animal\ at\ the\ new\ location\ in\ the\ given\ field.\r\n\ @param\ newLocation\ The\ animal's\ new\ location.\r\n
+comment11.params=
+>>>>>>> da663a66adbd60b138b7e82743856f03f3d06fb3
 comment11.target=Field\ getField()
 comment11.text=\r\n\ Return\ the\ animal's\ field.\r\n\ @return\ The\ animal's\ field.\r\n
 comment12.params=
 comment12.target=Clock\ getClock()
 comment12.text=\r\n\ Return\ the\ clock\r\n\ @return\ The\ clock\r\n
+<<<<<<< HEAD
+=======
+>>>>>>> 7b77431c0b960931ae317b0cb4a7122386b3c64b
+>>>>>>> da663a66adbd60b138b7e82743856f03f3d06fb3
 comment2.params=
 comment2.target=void\ setGender()
 comment2.text=\r\n\ Randomly\ generate\ the\ animals\ gender\ with\ no\ seed\r\n\ checks\ a\ random\ float\ between\ 0\ and\ 1\ to\ 0.5\ to\ \r\n\ make\ the\ gender\ of\ the\ animal\ male\ or\ female\r\n

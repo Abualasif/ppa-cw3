@@ -1,0 +1,4 @@
+#BlueJ class context
+comment0.target=Environment
+comment0.text=\r\n\ A\ simple\ class\ that\ tracks\ the\ hour\ of\ day\ and\ weather\ conditions\r\n\ All\ animal\ instances\ hold\ a\ reference\ to\ one\ shared\ Environment\r\n\ \r\n\ @author\ Haroon\ Yasin,\ Rahi\ Al-Asif,\ Mohammed\ Kazi\r\n\ @version\ 1.0\r\n
+numComments=1

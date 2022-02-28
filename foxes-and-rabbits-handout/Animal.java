@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * A class representing shared characteristics of animals.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 
@@ -23,18 +23,17 @@ public abstract class Animal
     private Field field;
     // The animal's position in the field.
     private Location location;
-    // all animal instances hold a reference to the same clock.
-    private Clock clock;
+    // all animal instances hold a reference to the same environment.
+    private Environment clock;
     // The animal's gender
     protected Gender gender;
     
     /**
      * Create a new animal at location in field.
-     * 
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(Field field, Location location, Clock clock)
+    public Animal(Field field, Location location, Environment clock)
     {
         alive = true;
         this.field = field;
@@ -156,7 +155,7 @@ public abstract class Animal
      * Return the clock
      * @return The clock
      */
-    protected Clock getClock()
+    protected Environment getClock()
     {
         return clock;
     }

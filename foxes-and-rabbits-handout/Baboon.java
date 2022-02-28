@@ -4,47 +4,39 @@ import java.util.Iterator;
 
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a baboon.
+ * Baboons age, move, breed, eat plants and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
  * @version 2016.02.29 (2)
  */
 public class Baboon extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
+    // class variables
 
-    // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.07;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-
     private static final int PLANT_FOOD_VALUE = 10;
-
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    
     // A shared male birth rate for animals of this species
     //private static final float maleBirthRate;
 
-    // Individual characteristics (instance fields).
-    
-    // The rabbit's age.
+    //instance fields
     private int age;
     private int foodLevel;
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new baboon. A baboon may be created with age
      * zero (a new born) or with a random age.
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the baboon will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Baboon(boolean randomAge, Field field, Location location, Clock clock)
+    public Baboon(boolean randomAge, Field field, Location location, Environment clock)
     {
         super(field, location, clock);
         age = 0;
@@ -59,17 +51,15 @@ public class Baboon extends Animal
     }
     
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the baboon does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newBaboons A list to return newly born baboons.
      */
     public void act(List<Animal> newBaboons)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            int hourOfDay = getClock().getHourOfDay();
-            
             giveBirth(newBaboons);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
@@ -88,6 +78,11 @@ public class Baboon extends Animal
         }
     }
 
+    /**
+     * Look for plants adjacent to the current location.
+     * Only the first plant found is eaten.
+     * @return Where a plant was found, or null if it wasn't.
+     */
     private Location findFood()
     {
         Field field = getField();
@@ -110,7 +105,7 @@ public class Baboon extends Animal
 
     /**
      * Increase the age.
-     * This could result in the rabbit's death.
+     * This could result in the baboon's death
      */
     private void incrementAge()
     {
@@ -121,13 +116,12 @@ public class Baboon extends Animal
     }
     
     /**
-     * Check whether or not this rabbit is to give birth at this step.
+     * Check whether or not this baboon is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newBaboons A list to return newly born baboons.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    private void giveBirth(List<Animal> newBaboons)
     {
-        // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -135,7 +129,7 @@ public class Baboon extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Baboon young = new Baboon(false, field, loc, getClock());
-            newRabbits.add(young);
+            newBaboons.add(young);
         }
     }
         
@@ -154,8 +148,8 @@ public class Baboon extends Animal
     }
 
     /**
-     * A rabbit can breed if it has reached the breeding age.
-     * @return true if the rabbit can breed, false otherwise.
+     * A baboon can breed if it has reached the breeding age.
+     * @return true if the baboon can breed, false otherwise.
      */
     private boolean canBreed()
     {
@@ -168,6 +162,10 @@ public class Baboon extends Animal
         }
     }
 
+    /**
+     * Checks whether a female can breed with animals around it
+     * @return true if adjacent baboon (if found) is male 
+     */
     private boolean isCompatibleAnimal()
     {
         Field field = getField();
@@ -187,7 +185,7 @@ public class Baboon extends Animal
     }
     
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Make this baboon more hungry. This could result in the baboon's death.
      */
     private void incrementHunger()
     {
