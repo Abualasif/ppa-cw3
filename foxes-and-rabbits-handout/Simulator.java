@@ -21,7 +21,7 @@ public class Simulator
     
     // The probability that each species will be created in any given grid position.
     private static final double VULTURE_CREATION_PROBABILITY = 0.01;
-    private static final double FOX_CREATION_PROBABILITY = 0.01;
+    private static final double LION_CREATION_PROBABILITY = 0.01;
     private static final double GIRAFFE_CREATION_PROBABILITY = 0.02;
     private static final double BABOON_CREATION_PROBABILITY = 0.02;
     private static final double RHINO_CREATION_PROBABILITY = 0.4;
@@ -109,16 +109,15 @@ public class Simulator
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
-     * fox and rabbit.
+     * species
      */
     public void simulateOneStep()
     {
         step++;
         clock.incrementHourOfDay();
         
-        // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();        
-        // Let all rabbits act.
+        // Let all animals "act"
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
             animal.act(newAnimals);
@@ -127,7 +126,7 @@ public class Simulator
             }
         }
                
-        // Add the newly born foxes and rabbits to the main lists.
+        // Add all newly born species to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, field);
@@ -160,7 +159,7 @@ public class Simulator
                     Vulture vulture = new Vulture(true, field, location, clock);
                     animals.add(vulture);
                 }
-                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= LION_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Lion lion = new Lion(true, field, location, clock);
                     animals.add(lion);
