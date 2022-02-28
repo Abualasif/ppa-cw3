@@ -17,7 +17,9 @@ public class Rhino extends Animal
     private static final int MAX_AGE = 40;
     private static final double BREEDING_PROBABILITY = 0.4;
     private static final int MAX_LITTER_SIZE = 4;
+=======
     private static final int PLANT_FOOD_VALUE = 10;
+>>>>>>> da663a66adbd60b138b7e82743856f03f3d06fb3
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
