@@ -36,6 +36,7 @@ public class SimulatorView extends JFrame
 
     // A map for storing colors for participants in the simulation
     private Map<Class, Color> colors;
+    private Map<Class, String> colorClassMap;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
 
@@ -46,7 +47,7 @@ public class SimulatorView extends JFrame
      * @param height The simulation's height.
      * @param width  The simulation's width.
      */
-    public SimulatorView(int height, int width)
+    public SimulatorView(int height, int width, boolean showGUI)
     {
 
         paused = false;
@@ -54,6 +55,7 @@ public class SimulatorView extends JFrame
 
         stats = new FieldStats();
         colors = new LinkedHashMap<>();
+        colorClassMap = new LinkedHashMap<>();
 
         setTitle("Savanna Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
@@ -92,7 +94,6 @@ public class SimulatorView extends JFrame
         statsButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 statsSim();
-                continueSim();
             }
         });
 
@@ -116,7 +117,7 @@ public class SimulatorView extends JFrame
         contents.add(fieldView, BorderLayout.CENTER);
         contents.add(viewPane, BorderLayout.SOUTH);
         pack();
-        setVisible(true);
+        setVisible(showGUI);
     }
     
     private void stepSim(){
@@ -133,7 +134,22 @@ public class SimulatorView extends JFrame
 
     private void statsSim(){
         pauseSim();
-        JOptionPane.showMessageDialog(contents,stats.getPopulationStatistics(internalField));
+        String statsString;
+        statsString = stats.getPopulationStatistics(internalField) + getClassColors();
+        JOptionPane.showMessageDialog(contents,statsString);
+    }
+
+    private String getClassColors(){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Key for Class Colours \n");
+        for(Class key : colorClassMap.keySet()) {
+            buffer.append("Class ");
+            buffer.append(key.getName());
+            buffer.append(" : ");
+            buffer.append(colorClassMap.get(key));
+            buffer.append(" \n");
+        }
+        return buffer.toString();
     }
 
     private void exitSim(){
@@ -159,9 +175,10 @@ public class SimulatorView extends JFrame
      * @param animalClass The animal's Class object.
      * @param color The color to be used for the given class.
      */
-    public void setColor(Class animalClass, Color color)
+    public void setColor(Class animalClass, Color color, String colorString)
     {
         colors.put(animalClass, color);
+        colorClassMap.put(animalClass, colorString);
     }
 
     /**

@@ -14,11 +14,11 @@ public class Baboon extends Animal
 {
     // class variables
 
-    private static final int BREEDING_AGE = 5;
-    private static final int MAX_AGE = 40;
-    private static final double BREEDING_PROBABILITY = 0.07;
-    private static final int MAX_LITTER_SIZE = 4;
-    private static final int PLANT_FOOD_VALUE = 10;
+    private static final int BREEDING_AGE = 12;
+    private static final int MAX_AGE = 35;
+    private static final double BREEDING_PROBABILITY = 0.6;
+    private static final int MAX_LITTER_SIZE = 3;
+    private static final int PLANT_FOOD_VALUE = 2;
     private static final Random rand = Randomizer.getRandom();
     
     // A shared male birth rate for animals of this species
@@ -59,14 +59,27 @@ public class Baboon extends Animal
     {
         incrementAge();
         incrementHunger();
+        Location newLocation = null;
         if(isAlive()) {
-            giveBirth(newBaboons);            
-            // Move towards a source of food if found.
-            Location newLocation = findFood();
-            if(newLocation == null) { 
-                // No food found - try to move to a free location.
+            if (shouldSleep()) {
+                // maintain hunger level
+                decrementHunger();
+            }
+            else if (isAffectedByWeather()) {
+                // vulture can't hunt prey in fog
+                decrementHunger();
                 newLocation = getField().freeAdjacentLocation(getLocation());
             }
+            else {
+                giveBirth(newBaboons);            
+                // Move towards a source of food if found.
+                newLocation = findFood();
+                if(newLocation == null) { 
+                    // No food found - try to move to a free location.
+                    newLocation = getField().freeAdjacentLocation(getLocation());
+                }
+            }
+            
             // See if it was possible to move.
             if(newLocation != null) {
                 setLocation(newLocation);
@@ -193,6 +206,35 @@ public class Baboon extends Animal
         if(foodLevel <= 0) {
             setDead();
         }
+    }
+
+    private void decrementHunger()
+    {
+        foodLevel++;
+    }
+
+      /**
+     * Check if a vulture is affected by weather conditions
+     * Vultures are affected (i.e unable to move/eat) by FOG ONLY
+     */
+    public boolean isAffectedByWeather() 
+    {
+        Environment.Weather weather = getClock().getCurrentWeather();
+
+        boolean isAffectedByWeather = false;
+        return isAffectedByWeather;
+    }
+    
+    /**
+     * Checks whether a vulture would sleep by checking if the 
+     * hour of day falls withing designated sleeping hours
+     * @return if a vulture should sleep
+     */
+    private boolean shouldSleep() 
+    {
+        int hourOfDay = getClock().getHourOfDay();
+        
+        return hourOfDay >= 21 && hourOfDay <= 23;
     }
 
 }

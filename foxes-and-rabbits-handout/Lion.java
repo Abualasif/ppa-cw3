@@ -14,18 +14,18 @@ public class Lion extends Animal
     //class variables
     
     // The age at which a Lion can start to breed.
-    private static final int BREEDING_AGE = 15;
+    private static final int BREEDING_AGE = 6;
     // The age to which a Lion can live.
-    private static final int MAX_AGE = 150;
+    private static final int MAX_AGE = 45;
     // The likelihood of a Lion breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static final double BREEDING_PROBABILITY = 0.4;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 6;
     
     // The food values of each prey. In effect, these is the
     // number of steps a lion can go before it has to eat again.
-    private static final int GIRAFFE_FOOD_VALUE = 10;
-    private static final int RHINO_FOOD_VALUE = 10;
+    private static final int GIRAFFE_FOOD_VALUE = 20;
+    private static final int RHINO_FOOD_VALUE = 23;
     
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -265,6 +265,6 @@ public class Lion extends Animal
         int hourOfDay = getClock().getHourOfDay();
         
         // Lions should sleep between 18:00 and 23:00
-        return hourOfDay >= 18 && hourOfDay <= 23;
+        return hourOfDay >= 3 && hourOfDay <= 6;
     }
 }

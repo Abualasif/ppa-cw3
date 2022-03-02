@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		Simulator sim = new Simulator(); 
-		sim.runLongSimulation(1400);
+		sim.runLongSimulation(2000);
 
 		System.exit(0);
 	}

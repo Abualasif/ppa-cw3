@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Color;
+import java.lang.System;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
@@ -20,12 +21,16 @@ public class Simulator
     private static final int DEFAULT_DEPTH = 80;
     
     // The probability that each species will be created in any given grid position.
-    private static final double VULTURE_CREATION_PROBABILITY = 0.01;
-    private static final double LION_CREATION_PROBABILITY = 0.01;
-    private static final double GIRAFFE_CREATION_PROBABILITY = 0.02;
-    private static final double BABOON_CREATION_PROBABILITY = 0.02;
-    private static final double RHINO_CREATION_PROBABILITY = 0.4;
-    private static final double PLANT_CREATION_PROBABILITY = 0.2;
+    private double VULTURE_CREATION_PROBABILITY;
+    private double LION_CREATION_PROBABILITY;
+
+    private double GIRAFFE_CREATION_PROBABILITY;
+    private double BABOON_CREATION_PROBABILITY;
+    private double RHINO_CREATION_PROBABILITY;
+    
+    private double PLANT_CREATION_PROBABILITY;
+
+    private static final Double[] defaultSpawnParams = {0.1,0.1,0.15,0.15,0.15,0.18};
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -33,17 +38,21 @@ public class Simulator
     private Field field;
     // The current step of the simulation.
     private int step;
+    private int stepCount;
+    private int inputSteps;
     // A graphical view of the simulation.
     private SimulatorView view;
     // represents the hour of day. All animals hold a reference to this.
     private Environment clock;
+
+    private boolean showView;
     
     /**
      * Construct a simulation field with default size.
      */
     public Simulator()
     {
-        this(DEFAULT_DEPTH, DEFAULT_WIDTH);
+        this(DEFAULT_DEPTH, DEFAULT_WIDTH, defaultSpawnParams, true);
     }
     
     /**
@@ -51,8 +60,20 @@ public class Simulator
      * @param depth Depth of the field. Must be greater than zero.
      * @param width Width of the field. Must be greater than zero.
      */
-    public Simulator(int depth, int width)
+    public Simulator(int depth, int width, Double[] spawnParams, boolean showGUI)
     {
+
+        showView = showGUI;
+
+        VULTURE_CREATION_PROBABILITY = spawnParams[0];
+        LION_CREATION_PROBABILITY = spawnParams[1];
+
+        GIRAFFE_CREATION_PROBABILITY = spawnParams[2];
+        BABOON_CREATION_PROBABILITY = spawnParams[3];
+        RHINO_CREATION_PROBABILITY = spawnParams[4];
+
+        PLANT_CREATION_PROBABILITY = spawnParams[5];
+
         if(width <= 0 || depth <= 0) {
             System.out.println("The dimensions must be greater than zero.");
             System.out.println("Using default values.");
@@ -67,19 +88,17 @@ public class Simulator
         field = new Field(depth, width);
 
         // Create a view of the state of each location in the field.
-        view = new SimulatorView(depth, width);
+        view = new SimulatorView(depth, width, showGUI);
 
-        view.setColor(Lion.class, Color.RED);
-        view.setColor(Vulture.class, Color.BLUE); 
+        view.setColor(Lion.class, Color.RED, "RED");
+        view.setColor(Vulture.class, Color.BLUE, "BLUE"); 
         
-        view.setColor(Rhino.class, Color.MAGENTA);
-        view.setColor(Giraffe.class, Color.CYAN);
-        view.setColor(Baboon.class, Color.GREEN);
+        view.setColor(Rhino.class, Color.MAGENTA, "MAGENTA");
+        view.setColor(Giraffe.class, Color.CYAN, "CYAN");
+        view.setColor(Baboon.class, Color.GREEN, "GREEN");
 
-        view.setColor(Plant.class, Color.BLACK);
+        view.setColor(Plant.class, Color.BLACK, "BLACK");
         
-        // Setup a valid starting point.
-        System.out.println("Simulation created.");
         reset();
     }
 
@@ -89,9 +108,14 @@ public class Simulator
      */
     public void runLongSimulation(int steps)
     {
+        inputSteps = steps;
         simulate(steps);
     }
     
+    public boolean isSimValuesViable(){
+        return (view.isViable(field) && (stepCount == inputSteps));
+    }
+
     /**
      * Run the simulation from its current state for the given number of steps.
      * Stop before the given number of steps if it ceases to be viable.
@@ -108,11 +132,13 @@ public class Simulator
                     simulateOneStep();
                     view.negateSingleStep();
                 }
+            stepCount++;
             }
             simulateOneStep();
-            delay(120);   // uncomment this to run more slowly
+            //delay(120);   // uncomment this to run more slowly
             step++;
         }
+
     }
     
     /**
