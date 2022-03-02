@@ -13,10 +13,10 @@ import java.util.Iterator;
 public class Plant extends Animal
 {
 
-    private static final int BREEDING_AGE = 5;
-    private static final int MAX_AGE = 40;
-    private static final double BREEDING_PROBABILITY = 0.4;
-    private static final int MAX_LITTER_SIZE = 4;
+    private static final int BREEDING_AGE = 1;
+    private static final int MAX_AGE = 60;
+    private static final double BREEDING_PROBABILITY = 0.5;
+    private static final int MAX_LITTER_SIZE = 2;
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
