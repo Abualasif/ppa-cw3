@@ -7,7 +7,7 @@ import java.util.Iterator;
  * Plants age, get eaten and give rise to new plants,
  * but they do not move in the field.
  * 
- * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29 (2)
  */
 public class Plant extends Animal

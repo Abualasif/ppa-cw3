@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 /**
  * A simple model of a rhino.
- * Rhinos age, move, breed, and die.
+ * Rhinos age, move, eat plants, breed, and die.
  * 
- * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29 (2)
  */
 public class Rhino extends Animal
@@ -17,11 +17,8 @@ public class Rhino extends Animal
     private static final int MAX_AGE = 40;
     private static final double BREEDING_PROBABILITY = 0.4;
     private static final int MAX_LITTER_SIZE = 4;
-=======
     private static final int PLANT_FOOD_VALUE = 10;
->>>>>>> da663a66adbd60b138b7e82743856f03f3d06fb3
 
-    // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // A shared male birth rate for animals of this species

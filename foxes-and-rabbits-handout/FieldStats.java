@@ -6,7 +6,7 @@ import java.util.HashMap;
  * of a field. It is flexible: it will create and maintain a counter 
  * for any class of object that is found within the field.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29
  */
 public class FieldStats

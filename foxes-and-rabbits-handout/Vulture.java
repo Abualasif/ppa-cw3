@@ -6,20 +6,15 @@ import java.util.Random;
  * A simple model of a vulture.
  * Vulture age, move, eat prey (Rhinos/Baboons), and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29 (2)
  */
 public class Vulture extends Animal
 {
     // class variables
-    
-    // The age at which a vulture can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a vulture can live.
     private static final int MAX_AGE = 150;
-    // The likelihood of a vulture breeding.
     private static final double BREEDING_PROBABILITY = 0.09;
-    // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     
     // The food values of each prey. In effect, these is the

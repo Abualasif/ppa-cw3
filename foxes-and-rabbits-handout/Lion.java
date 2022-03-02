@@ -6,7 +6,7 @@ import java.util.Random;
  * A simple model of a Lion.
  * Lions age, move, eat prey (Rhinos/Giraffes) and die.
  * 
- * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29 (2)
  */
 public class Lion extends Animal

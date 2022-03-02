@@ -4,7 +4,7 @@ import java.util.Random;
  * A simple class that tracks the hour of day and weather conditions
  * All animal instances hold a reference to one shared Environment
  * 
- * @author Haroon Yasin, Rahi Al-Asif, Mohammed Kazi
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 1.0
  */
 public class Environment

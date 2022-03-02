@@ -6,7 +6,7 @@ import java.util.Iterator;
  * A simple model of a Giraffe.
  * Giraffes age, move, breed, eat plants and die.
  * 
- * @author David J. Barnes, Michael Kölling, Haroon Yasin, Rahi Al-Asif and Mohammed Kazi
+ * @author Haroon Yasin (K20008368), Rahi Al-Asif (K21063694) and Mohammed Kazi (K21050213)
  * @version 2016.02.29 (2)
  */
 public class Giraffe extends Animal
