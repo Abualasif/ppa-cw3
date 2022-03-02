@@ -42,7 +42,8 @@ public class Simulator
     private int inputSteps;
     // A graphical view of the simulation.
     private SimulatorView view;
-    // represents the hour of day. All animals hold a reference to this.
+    // represents the clock (which is tied to weather)...
+    // ... All animals hold a reference to this.
     private Environment clock;
 
     private boolean showView;
@@ -103,17 +104,13 @@ public class Simulator
     }
 
     /**
-     * Run the simulation from its current state for a reasonably long period,
-     * (4000 steps).
+     * Run the simulation from its current state for a number of steps
+     * @param steps the number of steps to run the simulation
      */
     public void runLongSimulation(int steps)
     {
         inputSteps = steps;
         simulate(steps);
-    }
-    
-    public boolean isSimValuesViable(){
-        return (view.isViable(field) && (stepCount == inputSteps));
     }
 
     /**
@@ -224,6 +221,10 @@ public class Simulator
         }
     }
     
+    public boolean isSimValuesViable(){
+        return (view.isViable(field) && (stepCount == inputSteps));
+    }
+
     /**
      * Pause for a given time.
      * @param millisec  The time to pause for, in milliseconds

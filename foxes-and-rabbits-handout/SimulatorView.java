@@ -139,6 +139,10 @@ public class SimulatorView extends JFrame
         JOptionPane.showMessageDialog(contents,statsString);
     }
 
+    /**
+     * Return the colors of each class in the simulation 
+     * @return the colors of each class as a string
+     */
     private String getClassColors(){
         StringBuffer buffer = new StringBuffer();
         buffer.append("Key for Class Colours \n");
@@ -152,18 +156,34 @@ public class SimulatorView extends JFrame
         return buffer.toString();
     }
 
+    /**
+     * Called when "exit" is pressed
+     * Stops the simulation
+     */
     private void exitSim(){
         System.exit(0);
     }
 
+    /**
+     * Called when "pause" is pressed
+     * Pauses the simulation
+     */
     private void pauseSim(){
         paused = true;
     }
 
+    /**
+     * Return whether the simulation is paused or not
+     * @return true if the simulation is paused
+     */
     public boolean getIfPaused(){
         return paused;
     }
 
+    /**
+     * Called when continue is pressed
+     * Resumes the simulation
+     */
     private void continueSim(){
         paused = false;
     }
@@ -247,6 +267,10 @@ public class SimulatorView extends JFrame
         return stats.isViable(field);
     }
 
+    /**
+     * Update an internal field to a new field
+     * @param field to replace internal field
+     */
     public void updateInternalField(Field field){
         internalField = field;
     }
